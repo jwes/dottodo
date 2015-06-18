@@ -1,0 +1,18 @@
+## General
++ lua script
++ asciidoc parser/formatter
++ luagi
++ append -> append to .todo and commit
++ print -> print .todo
++ remove -> delete elements from .todo file
+
+## Concept
++ decide central versus hierarchical
++ central is faster
++ central has a better history
++ in subdirectories, the central can be found easily
++ hirarchical does not depend on one git repo
+
+## lua stuff
++ find a module for arg parsing
++ find an assciidoc module

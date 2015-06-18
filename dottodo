@@ -1,0 +1,14 @@
+#!/usr/bin/lua
+local cmds = require("dottodo_commands")
+
+-- cmd list
+--[[
+  print -> print the .todo file
+  append [ tag ] <todo>
+  delete <regexp>
+]]
+
+local err = nil
+-- ignore the args for now
+
+cmds.print()
