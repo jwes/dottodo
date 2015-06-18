@@ -25,7 +25,7 @@ local function find_and_open()
       return nil, "repo is unusable, set it up"
    end
 
-   return file 
+   return file, repo
 end
 
 local function append( tag, todo )

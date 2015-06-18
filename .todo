@@ -16,3 +16,7 @@
 ## lua stuff
 + find a module for arg parsing
 + find an assciidoc module
+
+## implementation
++ append
++ delete
