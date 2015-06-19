@@ -10,5 +10,8 @@ local cmds = require("dottodo_commands")
 
 local err = nil
 -- ignore the args for now
+cmd = arg[1]
 
-cmds.print()
+if cmd == "print" then
+   cmds.print( arg[2] or "." )
+end
