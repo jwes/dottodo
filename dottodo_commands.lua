@@ -6,6 +6,18 @@ local FILENAME = ".todo"
 local SUFFIX = "\n# "
 local EOF = "\n$"
 
+local function get_section_position( content, path )
+   -- far too manual
+   local pattern = "# "..path..".-"
+   local s, e = content:find( pattern..SUFFIX ) 
+   if s then
+      e = e - #SUFFIX
+   else
+      s, e = content:find( pattern..EOF )
+   end
+   return s, e
+end
+
 local function find_and_open( path )
    lfs.chdir( path )
 
@@ -36,6 +48,9 @@ local function find_and_open( path )
 
    ret.relative_path = original_dir:gsub( current_dir, "." )
    ret.file, err = io.open( FILENAME )
+   ret.content = ret.file:read("*a")
+
+   ret.section_start, ret.section_end = get_section_position( ret.content, ret.relative_path ) 
 
    lfs.chdir( original_dir )
 
@@ -43,6 +58,12 @@ local function find_and_open( path )
 end
 
 local function append( tag, todo )
+   local t, err = find_and_open( "." )
+   if t and t.content then
+            
+   else
+      print( err )
+   end
 end
 
 local function delete( regexp )
@@ -50,23 +71,12 @@ end
 
 local function print_todos( path )
    local t, err = find_and_open( path )
-   if t and t.file then
-      local content = t.file:read("*a")
+   if t and t.content then
       if t.relative_path == "." then 
-         print( content )
+         print( t.content )
       else
-         -- far too manual
-         local pattern = "# "..t.relative_path..".-"
-
-         local s, e = content:find( pattern..SUFFIX ) 
-         if s then
-            e = e - #SUFFIX
-         else
-            s, e = content:find( pattern..EOF )
-         end
-
-         if s then
-            print( content:sub( s, e ) )
+         if t.section_start then
+            print( t.content:sub( t.section_start, t.section_end ) )
          else
             print( "nothing to do in this section" )
          end
